@@ -1,0 +1,136 @@
+:root {
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: black;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+
+  display: grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "aside"
+    "footer";
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  max-width: 1200px;
+    margin: 0 auto;
+}
+@media (min-width: 768px) {
+  body {
+    grid-template-areas:
+      "header header"
+      "nav nav"
+      "main aside"
+      "footer footer";
+    grid-template-rows: auto;
+    grid-template-columns: 2fr 1fr;
+  }
+}
+header {
+  grid-area: header;  
+  background-color: dodgerblue;
+  padding: 10px;
+  text-align: center;
+}
+
+nav {
+    grid-area: nav;
+  background-color: orange;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+
+main {
+    grid-area: main;
+  margin: 0;
+  padding: 0;
+}
+
+aside {
+    background-color: springgreen;
+    grid-area: aside;
+    text-align: right;
+    
+    font-size: larger;
+    font-weight: 900;
+    text-transform:uppercase;
+}
+
+footer {
+    grid-area: footer;
+}
+
+section {
+  padding: 5vh 0;
+}
+
+section#section-one {
+  background-color: white;
+}
+
+section#section-two {
+  background-color: blueviolet;
+}
+
+table.separate {
+  background-color: black;
+  border-collapse: separate;
+  border-spacing: 0 1px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+address {
+  background-color: orange;
+}
+
+a.button-link {
+  background-color: mediumslateblue;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  /* prevent marking text when clicking */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+a.button-link:hover {
+  background-color: darkslateblue;
+  color: white;
+}
