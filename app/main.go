@@ -19,17 +19,17 @@ func main() {
 
 func buttonHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	w.Header().Set("Access-Control-Allow-Origin", "*") // Add this line
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	html := `<div data-function="test">
-		<p data-function="change">TEST</p>
+		<p data-function="change" data-event="mouseover">TEST</p>
 		</div>`
 	fmt.Fprint(w, html)
 }
 
 func testHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	w.Header().Set("Access-Control-Allow-Origin", "*") // Add this line
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	html := `<p>TEST TEST TEST </p>`
 	fmt.Fprint(w, html)
@@ -37,7 +37,7 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 
 func changeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	w.Header().Set("Access-Control-Allow-Origin", "*") // Add this line
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	html := `<p>CHANGED</p>`
 	fmt.Fprint(w, html)
