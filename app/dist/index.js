@@ -1,37 +1,20 @@
 "use strict";
 const url = "http://localhost:8081/";
-document.addEventListener("DOMContentLoaded", initApp);
+let appContent;
 function initApp() {
     const navHome = document.getElementById("nav-home");
     if (!navHome) {
         return;
     }
-    const appContent = document.getElementsByTagName("app-content")[0];
-    if (!appContent) {
-        return;
-    }
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === 'childList') {
-                console.log('Content changed!');
-                // Get all elements that have data-function attribute
-                const elements = document.querySelectorAll('[data-function]');
-                console.log(elements);
-                // attach a click event listener to each element
-                elements.forEach((element) => {
-                    const functionName = element.getAttribute('data-function');
-                    console.log(functionName);
-                    element.addEventListener('click', () => {
-                        request(url + functionName, appContent);
-                    });
-                });
-            }
-        });
-    });
-    observer.observe(appContent, { childList: true, subtree: true });
     navHome.addEventListener("click", () => {
         request(url + "button", appContent);
     });
+    appContent = document.getElementsByTagName("app-content")[0];
+    if (!appContent) {
+        return;
+    }
+    const observer = new MutationObserver(observeContent);
+    observer.observe(appContent, { childList: true, subtree: true });
 }
 function request(url, rootElement) {
     fetch(url)
@@ -41,3 +24,39 @@ function request(url, rootElement) {
         rootElement.innerHTML = html;
     });
 }
+function observeContent(mutations) {
+    mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+            // Get all elements that have data-function attribute
+            const elements = document.querySelectorAll("[data-function]");
+            // attach a click event listener to each element
+            elements.forEach((element) => {
+                const functionName = element.getAttribute("data-function");
+                let eventName;
+                if (null === element.getAttribute("data-event")) {
+                    eventName = "click";
+                }
+                else {
+                    eventName = element.getAttribute("data-event");
+                }
+                let targetID;
+                if (null === element.getAttribute("data-target")) {
+                    targetID = "";
+                }
+                else {
+                    targetID = element.getAttribute("data-target");
+                }
+                console.log(functionName);
+                const isListenerAttached = element.getAttribute("data-listener-attached");
+                if (isListenerAttached) {
+                    return;
+                }
+                element.setAttribute("data-listener-attached", "true");
+                element.addEventListener(eventName, () => {
+                    request(url + functionName, appContent);
+                });
+            });
+        }
+    });
+}
+document.addEventListener("DOMContentLoaded", initApp);
