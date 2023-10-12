@@ -10,6 +10,25 @@ function initApp() {
     if (!appContent) {
         return;
     }
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+                console.log('Content changed!');
+                // Get all elements that have data-function attribute
+                const elements = document.querySelectorAll('[data-function]');
+                console.log(elements);
+                // attach a click event listener to each element
+                elements.forEach((element) => {
+                    const functionName = element.getAttribute('data-function');
+                    console.log(functionName);
+                    element.addEventListener('click', () => {
+                        request(url + functionName, appContent);
+                    });
+                });
+            }
+        });
+    });
+    observer.observe(appContent, { childList: true, subtree: true });
     navHome.addEventListener("click", () => {
         request(url + "button", appContent);
     });
