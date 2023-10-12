@@ -23,9 +23,15 @@ function initApp() {
         elements.forEach((element) => {
           const functionName = element.getAttribute('data-function');
           console.log(functionName);
+          const isListenerAttached = element.getAttribute('data-listener-attached');
+          if (isListenerAttached) {
+            return;
+          }
+          element.setAttribute('data-listener-attached', 'true');
           element.addEventListener('click', () => {
             request(url + functionName, appContent);
           });
+
         });
       }
     });
