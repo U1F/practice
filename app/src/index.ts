@@ -3,19 +3,35 @@ const url = "http://localhost:8081/";
 let appContent: Element;
 
 function initApp() {
+  appContent = document.getElementsByTagName("app-content")[0];
+  if (!appContent) {
+    return;
+  }
+
   const navHome = document.getElementById("nav-home");
   if (!navHome) {
     return;
   }
 
   navHome.addEventListener("click", () => {
-    request(url + "button", appContent);
+    request(url + "home", appContent);
   });
 
-  appContent = document.getElementsByTagName("app-content")[0];
-  if (!appContent) {
+  const navAbout = document.getElementById("nav-about");
+  if (!navAbout) {
     return;
   }
+  navAbout.addEventListener("click", () => {
+    request(url + "about", appContent);
+  });
+
+  const navContact = document.getElementById("nav-contact");
+  if (!navContact) {
+    return;
+  }
+  navContact.addEventListener("click", () => {
+    request(url + "contact", appContent);
+  });
 
   const observer = new MutationObserver(observeContent);
 

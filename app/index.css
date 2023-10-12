@@ -19,10 +19,10 @@ burger-menu {
 }
 
 app-menu {
-  display: block;
-  width: 100%;
-  height: 50px;
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
   @media screen and (max-width: 600px) {
     display: none;
   }
