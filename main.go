@@ -1,31 +1,43 @@
 package main
 
 import (
+	
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	
+	
+	"github.com/rs/cors"
 	"github.com/a-h/templ"
 )
 
 func main() {
+	mux := http.NewServeMux()
 	// for the main path we want to serve index.html
-	http.HandleFunc("/", responseFromFile("index.html"))
-// Serve static files from a "static" directory
-	http.Handle("/dist/", http.StripPrefix("/dist/", http.FileServer(http.Dir("dist"))))
-
+	mux.HandleFunc("/", responseFromFile("index.html"))
+	// Serve static files from a "static" directory
+	
+	mux.Handle("/dist/", http.StripPrefix("/dist/", http.FileServer(http.Dir("dist"))))
 	component := hello("Ulf")
-	http.Handle("/home", templ.Handler(component))
-	http.HandleFunc("/about", aboutHandler)
-	http.HandleFunc("/contact", contactHandler)
+	mux.Handle("/home", templ.Handler(component))
+	mux.HandleFunc("/about", aboutHandler)
+	mux.HandleFunc("/contact", contactHandler)
 
-	err := http.ListenAndServe(":8081", nil)
+	// CORS setup
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://127.0.0.1:8081"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST"},
+	})
+	// Use the CORS handler
+	handler := c.Handler(mux)
+
+	err := http.ListenAndServe(":8081", handler)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
-
-
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	respond(w, r, "<h1>About Us</h1>")
