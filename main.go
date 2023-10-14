@@ -13,13 +13,17 @@ import (
 )
 
 func main() {
+	log.SetPrefix("[htmy] ")
 	cfg, err := config.LoadConfig("config.json")
 	if err != nil {
 		log.Fatal("Error loading configuration:", err)
 	}
 
 	// Use the configuration
-	fmt.Println("Server Address:", cfg.ServerAddress)
+	log.Println("Server Address:", cfg.ServerAddress)
+	log.Println("Allowed Origins:", cfg.AllowedOrigins)
+	log.Println("Allow Credentials:", cfg.AllowCredentials)
+	log.Println("Allowed Methods:", cfg.AllowedMethods)
 
 	// Create the HTTP server
 	mux := http.NewServeMux()
@@ -66,7 +70,8 @@ func responseFromFile(filePath string) http.HandlerFunc {
 
 		html, err := os.ReadFile(filePath)
 		if err != nil {
-			fmt.Println("Error:", err)
+			log.Fatal("Error:", err)
+
 			http.Error(w, "File not found", 404)
 			return
 		}
