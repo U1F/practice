@@ -1,23 +1,21 @@
 package main
 
 import (
-	
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	
-	
-	"github.com/rs/cors"
+
 	"github.com/a-h/templ"
+	"github.com/rs/cors"
 )
 
 func main() {
 	mux := http.NewServeMux()
 	// for the main path we want to serve index.html
-	mux.HandleFunc("/", responseFromFile("index.html"))
+	mux.HandleFunc("/", responseFromFile("dist/index.html"))
 	// Serve static files from a "static" directory
-	
+
 	mux.Handle("/dist/", http.StripPrefix("/dist/", http.FileServer(http.Dir("dist"))))
 	component := hello("Ulf")
 	mux.Handle("/home", templ.Handler(component))
@@ -55,9 +53,13 @@ func respond(w http.ResponseWriter, r *http.Request, html string) {
 
 func responseFromFile(filePath string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		//Read from file
+		// Print the filePath to check if it's correct
+		fmt.Println("File path:", filePath)
+
+		// Read from file
 		html, err := os.ReadFile(filePath)
 		if err != nil {
+			fmt.Println("Error:", err)
 			http.Error(w, "File not found", 404)
 			return
 		}
