@@ -50,6 +50,12 @@ func main() {
 		AllowedMethods:   cfg.AllowedMethods,
 	})
 
+	// Initialize the database connection.
+	datab.InitializeDB("host", "port", "user", "password", "dbname")
+
+	// Set up your HTTP server's routing.
+	http.HandleFunc("/my-endpoint", datab.MyEndpointHandler)
+
 	// Use the CORS handler
 	handler := c.Handler(mux)
 
