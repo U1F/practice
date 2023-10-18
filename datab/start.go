@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	// idk why you complain so much, but whatever
 	"github.com/a-h/templ"
 	_ "github.com/lib/pq"
 )

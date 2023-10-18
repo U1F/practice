@@ -10,6 +10,7 @@ import (
 	"github.com/rs/cors"
 	"grapefruixyz.org/m/v2/app"
 	"grapefruixyz.org/m/v2/config"
+	"grapefruixyz.org/m/v2/datab"
 )
 
 func main() {

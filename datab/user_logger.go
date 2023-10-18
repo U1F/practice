@@ -71,7 +71,7 @@ func LogUserInteraction(interaction UserInteraction) error {
 		INSERT INTO user_interactions (user_id, element_id, interaction_time)
 		VALUES ($1, $2, $3)
 	`
-
+	// going to work on this later
 	_, err := DB.Exec(query, interaction.UserID, interaction.ElementID, interaction.Timestamp)
 	if err != nil {
 		return err
@@ -84,7 +84,7 @@ func LogUserInteraction(interaction UserInteraction) error {
 // Initialize the database connection based on earlier setup from connector.go or similar file.
 // You should call this function at the start of your application, ensuring it's done before any database interaction occurs.
 func Initialize() {
-	// The parameters should be your actual database credentials and information.
+	// I have no idea how to do this right now so I'll touch this up later
 	InitializeDB("yourHost", "yourPort", "yourUser", "yourPassword", "yourDBName")
 }
 
