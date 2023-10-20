@@ -20,7 +20,7 @@ type DBParams struct {
 	DBName   string
 }
 
-func main() {
+func DB() {
 	if len(os.Args) < 6 {
 		log.Fatalln("Usage: go run createDBWithTempl.go <host> <port> <user> <password> <dbname>")
 	}
