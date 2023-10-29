@@ -1,5 +1,5 @@
 "use strict";
-const url = "http://localhost:8081/";
+const url = window.location.origin + "/";
 let appContent;
 function initApp() {
     appContent = document.getElementsByTagName("app-content")[0];
